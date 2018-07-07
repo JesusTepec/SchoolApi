@@ -12,14 +12,20 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return view('index');
 });
 
-$router->get('/key', function (){
-    return str_random(32);
+$router->get('/calificaciones', function (){
+    return view('index');
 });
 
-$router->get('/calificaciones', ['uses' => 'EscuelaController@calificaciones']);
-$router->post('/calificaciones', ['uses' => 'EscuelaController@crearCalificacion']);
-$router->put('/calificaciones/{idCalificacion}', ['uses' => 'EscuelaController@actualizarCalificacion']);
-$router->delete('/calificaciones/{idCalificacion}', ['uses' => 'EscuelaController@eliminarCalificacion']);
+$router->get('/api_token', function (){
+    return str_random(60);
+});
+
+$router->group(['middleware' => ['auth']], function () use ($router){
+    $router->get('/calificaciones/{idUsuario}', ['uses' => 'EscuelaController@calificaciones']);
+    $router->post('/calificaciones', ['uses' => 'EscuelaController@crearCalificacion']);
+    $router->put('/calificaciones/{idCalificacion}', ['uses' => 'EscuelaController@actualizarCalificacion']);
+    $router->delete('/calificaciones/{idCalificacion}', ['uses' => 'EscuelaController@eliminarCalificacion']);
+});

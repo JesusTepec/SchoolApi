@@ -15,6 +15,7 @@ class Calificacion extends Model implements AuthenticatableContract, Authorizabl
     public $timestamps = false;
 
     protected $table = "t_calificaciones";
+
     protected $primaryKey = 'id_t_calificaciones';
 
     /**
